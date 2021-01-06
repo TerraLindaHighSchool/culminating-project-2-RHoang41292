@@ -1015,10 +1015,11 @@ MonoBehaviour:
   powerupPrefab: {fileID: 3415873313995682160, guid: 3fbdaa9427a22f041ad541499397a0cd,
     type: 3}
   player: {fileID: 1526358640}
+  isGameActive: 0
   titleScreen: {fileID: 0}
   waveText: {fileID: 1853753282}
   gameOverText: {fileID: 152023068}
-  isGameActive: 0
+  restartButton: {fileID: 0}
 --- !u!4 &1331292271
 Transform:
   m_ObjectHideFlags: 0
@@ -1524,7 +1525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1913359055
 RectTransform:
   m_ObjectHideFlags: 0
