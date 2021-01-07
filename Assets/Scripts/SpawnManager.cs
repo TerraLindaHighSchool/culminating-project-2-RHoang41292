@@ -10,13 +10,13 @@ public class SpawnManager : MonoBehaviour
     //Entity Variables
     public GameObject enemyPrefab;
     public int enemyCount;
-    public int waveNumber = 1;
+    public int waveNumber = 0;
     public GameObject powerupPrefab;
     public GameObject player;
     public bool isGameActive;
 
     //UI Stuff
-    public TextMeshProUGUI titleScreen;
+    public GameObject titleScreen;
     public TextMeshProUGUI waveText;
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
@@ -30,6 +30,8 @@ public class SpawnManager : MonoBehaviour
     {
         SpawnEnemyWave(waveNumber);
         Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
+
+        isGameActive = true;
     }
 
     // Update is called once per frame
@@ -37,6 +39,7 @@ public class SpawnManager : MonoBehaviour
     {
         enemyCount = FindObjectsOfType<Enemy>().Length;
         GameOver();
+        waveCounter();
 
         if (enemyCount == 0 && isGameActive)
         {
@@ -69,10 +72,18 @@ public class SpawnManager : MonoBehaviour
     {
         if(player.transform.position.y < lowerBound)
         {
+            //set the game over text and button to active
             gameOverText.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
+
             isGameActive = false;
-            Destroy(gameObject);
         }
+
+        if (player.transform.position.y < lowerBound && isGameActive)
+        {
+            Destroy(player);
+        }
+
     }
 
     public void RestartGame()
@@ -92,4 +103,16 @@ public class SpawnManager : MonoBehaviour
         titleScreen.gameObject.SetActive(false);
     }
     **/
+
+    public void waveCounter()
+    {
+        waveText.text = "Wave: " + waveNumber;
+    }
+
+    public int getWaveNumber()
+    {
+        //returns the wave number for enemy.cs to grab in order to make
+        // a tutorial level.
+        return waveNumber;
+    }
 }
