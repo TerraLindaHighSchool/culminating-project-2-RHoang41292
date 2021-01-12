@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 {
     public GameObject player;
     public SpawnManager spawnManager;
-    
+    public ParticleSystem enemyDeathParticle;
 
     private Rigidbody enemyRb;
     private float speed = 5.0f;
@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -10)
         {
+            enemyDeathParticle.Play();
             Destroy(gameObject);
         }
 

@@ -14,6 +14,12 @@ public class SpawnManager : MonoBehaviour
     public GameObject powerupPrefab;
     public GameObject player;
     public bool isGameActive = false;
+    public GameObject stage;
+    public float stageX;
+    public float stageY;
+    public float stageZ;
+
+
     //public Enemy enemyScript;
     public GameObject enemy;
 
@@ -49,6 +55,10 @@ public class SpawnManager : MonoBehaviour
 
         if (enemyCount == 0 && isGameActive)
         {
+            if (waveNumber > 4)
+            {
+                scaleStage();
+            }
             waveNumber++;
             SpawnEnemyWave(waveNumber);
         }
@@ -61,6 +71,7 @@ public class SpawnManager : MonoBehaviour
 
     private Vector3 GenerateSpawnPosition()
     {
+        spawnRange = 9 * (stageX / 5);
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
         Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
@@ -84,12 +95,6 @@ public class SpawnManager : MonoBehaviour
 
             isGameActive = false;
         }
-
-        if (player.transform.position.y < lowerBound && isGameActive)
-        {
-            Destroy(player);
-        }
-
     }
 
     public void RestartGame()
@@ -104,6 +109,9 @@ public class SpawnManager : MonoBehaviour
     {
         isGameActive = true;
         waveNumber = 0;
+        stageX = 5.0f;
+        stageY = 5.0f;
+        stageZ = 5.0f;
 
         SpawnEnemyWave(waveNumber);
         Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
@@ -116,6 +124,15 @@ public class SpawnManager : MonoBehaviour
         }
         
         
+    }
+
+    void scaleStage()
+    {
+        stageX = stageX - .3f;
+        stageY = stageY - .3f;
+        stageZ = stageZ - .3f;
+        Vector3 local = transform.localScale;
+        stage.transform.localScale = new Vector3(stageX, stageY, stageZ);
     }
     
 

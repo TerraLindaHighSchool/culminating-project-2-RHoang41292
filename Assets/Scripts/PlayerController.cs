@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     public bool hasPowerup;
     public GameObject powerupIndicator;
+    public ParticleSystem collisionParticle;
+    public ParticleSystem deathParticle;
 
     private Rigidbody playerRb;
     private GameObject focalPoint;
@@ -32,6 +34,13 @@ public class PlayerController : MonoBehaviour
 
         //aura for powerUp
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+        
+        //play death particle
+        if (transform.position.y <= -10)
+        {
+            deathParticle.Play();
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,6 +75,11 @@ public class PlayerController : MonoBehaviour
                 " with powerup set to " + hasPowerup);
 
             enemyRigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collisionParticle.Play();
         }
     }
 }
