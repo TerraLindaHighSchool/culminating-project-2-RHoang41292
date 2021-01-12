@@ -13,7 +13,9 @@ public class SpawnManager : MonoBehaviour
     public int waveNumber = 0;
     public GameObject powerupPrefab;
     public GameObject player;
-    public bool isGameActive;
+    public bool isGameActive = false;
+    //public Enemy enemyScript;
+    public GameObject enemy;
 
     //UI Stuff
     public GameObject titleScreen;
@@ -24,14 +26,13 @@ public class SpawnManager : MonoBehaviour
     //private variables
     private float spawnRange = 9;
     private float lowerBound = -5;
+    private bool isRestart;
 
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
-        Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
-
-        isGameActive = true;
+        isGameActive = false;
+        //enemyScript = GameObject.Find("Enemy").GetComponent<Enemy>();
     }
 
     // Update is called once per frame
@@ -39,7 +40,12 @@ public class SpawnManager : MonoBehaviour
     {
         enemyCount = FindObjectsOfType<Enemy>().Length;
         GameOver();
-        waveCounter();
+
+        if(isGameActive)
+        {
+            waveCounter();
+        }
+        
 
         if (enemyCount == 0 && isGameActive)
         {
@@ -47,7 +53,7 @@ public class SpawnManager : MonoBehaviour
             SpawnEnemyWave(waveNumber);
         }
 
-        if (waveNumber % 2 == 0 && enemyCount == 0)
+        if (waveNumber % 2 == 0 && enemyCount == 0 && isGameActive)
         {
             Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
         }
@@ -89,30 +95,33 @@ public class SpawnManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        isRestart = true;
+        StartGame();
     }
 
-    /**
+    
     public void StartGame()
     {
         isGameActive = true;
-        waveNumber = 1;
+        waveNumber = 0;
 
         SpawnEnemyWave(waveNumber);
         Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
 
+        player.gameObject.SetActive(true);
         titleScreen.gameObject.SetActive(false);
+        if(!isRestart)
+        {
+            enemy.gameObject.SetActive(true);
+        }
+        
+        
     }
-    **/
+    
 
     public void waveCounter()
     {
         waveText.text = "Wave: " + waveNumber;
     }
 
-    public int getWaveNumber()
-    {
-        //returns the wave number for enemy.cs to grab in order to make
-        // a tutorial level.
-        return waveNumber;
-    }
 }
