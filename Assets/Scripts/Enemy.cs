@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject player;
-    public SpawnManager spawnManager;
+    private GameObject player;
+    private SpawnManager spawnManager;
     public ParticleSystem enemyDeathParticle;
 
     private Rigidbody enemyRb;
@@ -45,11 +45,13 @@ public class Enemy : MonoBehaviour
         }
         */
 
-        if (transform.position.y < -10)
+        if (transform.position.y < -10 && spawnManager.hasSpawnedAll)
         {
-            enemyDeathParticle.Play();
+            if (enemyDeathParticle != null)
+            {
+                enemyDeathParticle.Play();
+            }
             Destroy(gameObject);
         }
-
     }
 }

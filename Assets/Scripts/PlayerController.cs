@@ -38,7 +38,10 @@ public class PlayerController : MonoBehaviour
         //play death particle
         if (transform.position.y <= -10)
         {
-            deathParticle.Play();
+            if (deathParticle != null)
+            {
+                deathParticle.Play();
+            }
             Destroy(gameObject);
         }
     }
@@ -77,7 +80,7 @@ public class PlayerController : MonoBehaviour
             enemyRigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
         }
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && collisionParticle != null)
         {
             collisionParticle.Play();
         }

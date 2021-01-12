@@ -124,8 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e929d27ee50a4464a81130623a8f8b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  spawnManager: {fileID: 0}
   enemyDeathParticle: {fileID: 4758139293343110241}
 --- !u!1001 &204020609
 PrefabInstance:
@@ -207,6 +205,16 @@ PrefabInstance:
     - target: {fileID: 4758139293545943008, guid: c7ad2532a6eeb40b59033c75e71fa054,
         type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758139293545943008, guid: c7ad2532a6eeb40b59033c75e71fa054,
+        type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570407641280263832, guid: c7ad2532a6eeb40b59033c75e71fa054,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8088288519815545661, guid: c7ad2532a6eeb40b59033c75e71fa054,

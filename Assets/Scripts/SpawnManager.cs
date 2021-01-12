@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
 
     //public Enemy enemyScript;
     public GameObject enemy;
+    public bool hasSpawnedAll;
 
     //UI Stuff
     public GameObject titleScreen;
@@ -38,6 +39,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         isGameActive = false;
+        hasSpawnedAll = true;
         //enemyScript = GameObject.Find("Enemy").GetComponent<Enemy>();
     }
 
@@ -55,12 +57,17 @@ public class SpawnManager : MonoBehaviour
 
         if (enemyCount == 0 && isGameActive)
         {
-            if (waveNumber > 4)
-            {
-                scaleStage();
-            }
             waveNumber++;
             SpawnEnemyWave(waveNumber);
+            if (enemyCount >= waveNumber)
+            {
+                hasSpawnedAll = true;
+            }
+        }
+
+        if (waveNumber > 4 && enemyCount == 0)
+        {
+            scaleStage();
         }
 
         if (waveNumber % 2 == 0 && enemyCount == 0 && isGameActive)
@@ -72,6 +79,7 @@ public class SpawnManager : MonoBehaviour
     private Vector3 GenerateSpawnPosition()
     {
         spawnRange = 9 * (stageX / 5);
+
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
         Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
@@ -79,9 +87,13 @@ public class SpawnManager : MonoBehaviour
     }
     void SpawnEnemyWave(int enemiesToSpawn)
     {
+        Debug.Log(enemiesToSpawn);
+
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            hasSpawnedAll = false;
+            Debug.Log("i spawned" + enemyCount);
         }
     }
 
@@ -128,9 +140,13 @@ public class SpawnManager : MonoBehaviour
 
     void scaleStage()
     {
-        stageX = stageX - .3f;
-        stageY = stageY - .3f;
-        stageZ = stageZ - .3f;
+        if (stageX >= 3 && enemyCount == 0)
+        {
+            stageX = stageX - .3f;
+            stageY = stageY - .3f;
+            stageZ = stageZ - .3f;
+        }
+        
         Vector3 local = transform.localScale;
         stage.transform.localScale = new Vector3(stageX, stageY, stageZ);
     }
