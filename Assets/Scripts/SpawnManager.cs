@@ -22,7 +22,6 @@ public class SpawnManager : MonoBehaviour
 
     //public Enemy enemyScript;
     public GameObject enemy;
-    public bool hasSpawnedAll;
 
     //UI Stuff
     public GameObject titleScreen;
@@ -39,7 +38,6 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         isGameActive = false;
-        hasSpawnedAll = true;
         //enemyScript = GameObject.Find("Enemy").GetComponent<Enemy>();
     }
 
@@ -59,10 +57,6 @@ public class SpawnManager : MonoBehaviour
         {
             waveNumber++;
             SpawnEnemyWave(waveNumber);
-            if (enemyCount >= waveNumber)
-            {
-                hasSpawnedAll = true;
-            }
         }
 
         if (waveNumber > 4 && enemyCount == 0)
@@ -92,8 +86,6 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
-            hasSpawnedAll = false;
-            Debug.Log("i spawned" + enemyCount);
         }
     }
 

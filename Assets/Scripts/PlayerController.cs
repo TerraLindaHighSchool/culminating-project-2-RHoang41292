@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
             {
                 deathParticle.Play();
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

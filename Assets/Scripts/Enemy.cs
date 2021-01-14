@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
         }
         */
 
-        if (transform.position.y < -10 && spawnManager.hasSpawnedAll)
+        if (transform.position.y < -10)
         {
             if (enemyDeathParticle != null)
             {
