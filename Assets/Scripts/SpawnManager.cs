@@ -81,8 +81,6 @@ public class SpawnManager : MonoBehaviour
     }
     void SpawnEnemyWave(int enemiesToSpawn)
     {
-        Debug.Log(enemiesToSpawn);
-
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
